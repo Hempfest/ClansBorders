@@ -61,6 +61,10 @@ public class BorderTaskEvent extends ClanEventBuilder implements Cancellable {
 		return claim;
 	}
 
+	public Player getUser() {
+		return p;
+	}
+
 	public void perform() {
 		// send borders
 		if (Claim.claimUtil.isInClaim(p.getLocation())) {
