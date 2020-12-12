@@ -22,8 +22,6 @@ public class BorderTaskEvent extends ClanEventBuilder implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
 	private boolean cancelled;
 	private final Player p;
-	private boolean inClaim;
-	private Claim claim;
 
 	public BorderTaskEvent(Player p) {
 		this.p = p;
@@ -54,11 +52,11 @@ public class BorderTaskEvent extends ClanEventBuilder implements Cancellable {
 	}
 
 	public boolean isInClaim() {
-		return inClaim;
+		return Claim.claimUtil.isInClaim(p.getLocation());
 	}
 
 	public Claim getClaim() {
-		return claim;
+		return new Claim(Claim.claimUtil.getClaimID(p.getLocation()));
 	}
 
 	public Player getUser() {
@@ -68,9 +66,7 @@ public class BorderTaskEvent extends ClanEventBuilder implements Cancellable {
 	public void perform() {
 		// send borders
 		if (Claim.claimUtil.isInClaim(p.getLocation())) {
-			inClaim = true;
-			Claim claim = new Claim(Claim.claimUtil.getClaimID(p.getLocation()));
-			this.claim = claim;
+			Claim claim = getClaim();
 			int cy1 = p.getLocation().getBlockY() + 5;
 			int cy2 = p.getLocation().getBlockY() - 5;
 			int cx1 = claim.getChunk().getX()*16;
@@ -112,8 +108,6 @@ public class BorderTaskEvent extends ClanEventBuilder implements Cancellable {
 				cube.sendCube(CubeObject.ParticleColor.WHITE);
 			}
 		} else {
-			this.claim = null;
-			inClaim = false;
 			int cy1 = p.getLocation().getBlockY() + 5;
 			int cy2 = p.getLocation().getBlockY() - 5;
 			int cx1 = p.getLocation().getChunk().getX()*16;
