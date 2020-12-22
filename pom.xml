@@ -77,7 +77,7 @@
         <dependency>
             <groupId>com.github.Hempfest</groupId>
             <artifactId>Clans</artifactId>
-            <version>2.0.8-R5</version>
+            <version>2.0.8-F</version>
         </dependency>
         <dependency>
             <groupId>com.github.Hempfest</groupId>

@@ -10,6 +10,7 @@ import com.youtube.hempfest.clans.util.construct.Claim;
 import com.youtube.hempfest.clans.util.construct.Clan;
 import com.youtube.hempfest.clans.util.construct.ClanUtil;
 import com.youtube.hempfest.clans.util.listener.ClanEventBuilder;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
@@ -126,8 +127,10 @@ public class BorderTaskEvent extends ClanEventBuilder implements Cancellable {
 					}
 				}
 			}
-			if (ClansBorders.getInstance().spawnLocate.contains(p.getUniqueId())) {
-				cube.sendFlag(CubeObject.FlagType.SPAWN, getSpawn().getLocation());
+			if (Bukkit.getPluginManager().isPluginEnabled("CenterSpawn")) {
+				if (ClansBorders.getInstance().spawnLocate.contains(p.getUniqueId())) {
+					cube.sendFlag(CubeObject.FlagType.SPAWN, getSpawn().getLocation());
+				}
 			}
 			if (ClansBorders.getInstance().playerLocate.contains(p.getUniqueId())) {
 				for (Entity e : p.getNearbyEntities(1000, 10, 1000)) {
