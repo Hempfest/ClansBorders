@@ -131,6 +131,10 @@ public class BorderTaskEvent extends ClanEventBuilder implements Cancellable {
 				if (ClansBorders.getInstance().spawnLocate.contains(p.getUniqueId())) {
 					cube.sendFlag(CubeObject.FlagType.SPAWN, getSpawn().getLocation());
 				}
+			} else {
+				if (ClansBorders.getInstance().spawnLocate.contains(p.getUniqueId())) {
+					cube.sendFlag(CubeObject.FlagType.SPAWN, p.getWorld().getSpawnLocation());
+				}
 			}
 			if (ClansBorders.getInstance().playerLocate.contains(p.getUniqueId())) {
 				for (Entity e : p.getNearbyEntities(1000, 10, 1000)) {
