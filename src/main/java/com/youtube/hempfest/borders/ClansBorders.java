@@ -1,12 +1,12 @@
 package com.youtube.hempfest.borders;
 
+import com.github.sanctum.labyrinth.formatting.component.Text_R2;
+import com.github.sanctum.labyrinth.library.Message;
+import com.github.sanctum.labyrinth.library.TextLib;
 import com.youtube.hempfest.borders.task.BorderTask;
 import com.youtube.hempfest.clans.util.events.CommandHelpEvent;
 import com.youtube.hempfest.clans.util.events.SubCommandEvent;
 import com.youtube.hempfest.clans.util.events.TabInsertEvent;
-import com.youtube.hempfest.hempcore.formatting.component.Text;
-import com.youtube.hempfest.hempcore.formatting.component.Text_R2;
-import com.youtube.hempfest.hempcore.library.Message;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.UUID;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -63,10 +62,7 @@ public final class ClansBorders extends JavaPlugin implements Listener {
 	}
 
 	private TextComponent coToggle(String body, String highlight, String highlightMsg, String command) {
-		if (Bukkit.getVersion().contains("1.16")) {
-			return new Text().textRunnable(body, highlight, highlightMsg, command);
-		} else
-			return Text_R2.textRunnable(body, highlight, highlightMsg, command);
+		return TextLib.getInstance().textRunnable(body, highlight, highlightMsg, command);
 	}
 
 	@EventHandler
