@@ -2,15 +2,12 @@ package com.youtube.hempfest.borders.event;
 
 import com.youtube.hempfest.borders.ClansBorders;
 import com.youtube.hempfest.borders.api.CubeObject;
-import com.youtube.hempfest.centerspawn.util.Spawn;
-import com.youtube.hempfest.centerspawn.util.SpawnManager;
 import com.youtube.hempfest.clans.HempfestClans;
 import com.youtube.hempfest.clans.util.StringLibrary;
 import com.youtube.hempfest.clans.util.construct.Claim;
 import com.youtube.hempfest.clans.util.construct.Clan;
 import com.youtube.hempfest.clans.util.construct.ClanUtil;
 import com.youtube.hempfest.clans.util.listener.ClanEventBuilder;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
@@ -47,17 +44,12 @@ public class BorderTaskEvent extends ClanEventBuilder implements Cancellable {
 		return handlers;
 	}
 
-	public Spawn getSpawn() {
-		SpawnManager manager = new SpawnManager(p);
-		return new Spawn(manager);
-	}
-
 	public boolean isInClaim() {
-		return Claim.claimUtil.isInClaim(p.getLocation());
+		return HempfestClans.getInstance().claimManager.isInClaim(p.getLocation());
 	}
 
 	public Claim getClaim() {
-		return new Claim(Claim.claimUtil.getClaimID(p.getLocation()));
+		return Claim.from(p.getLocation());
 	}
 
 	public Player getUser() {
@@ -66,14 +58,14 @@ public class BorderTaskEvent extends ClanEventBuilder implements Cancellable {
 
 	public void perform() {
 		// send borders
-		if (Claim.claimUtil.isInClaim(p.getLocation())) {
+		if (HempfestClans.getInstance().claimManager.isInClaim(p.getLocation())) {
 			Claim claim = getClaim();
 			int cy1 = p.getLocation().getBlockY() + 5;
 			int cy2 = p.getLocation().getBlockY() - 5;
-			int cx1 = claim.getChunk().getX()*16;
-			int cz1 = claim.getChunk().getZ()*16;
-			int cx2 = claim.getChunk().getX()*16+16;
-			int cz2 = claim.getChunk().getZ()*16+16;
+			int cx1 = claim.getChunk().getX() * 16;
+			int cz1 = claim.getChunk().getZ() * 16;
+			int cx2 = claim.getChunk().getX() * 16 + 16;
+			int cz2 = claim.getChunk().getZ() * 16 + 16;
 			CubeObject cube = new CubeObject(cx2, cx1, cy1, cy2, cz2, cz1);
 			cube.loadTarget(p);
 			if (Clan.clanUtil.getClan(p) != null) {
@@ -111,10 +103,10 @@ public class BorderTaskEvent extends ClanEventBuilder implements Cancellable {
 		} else {
 			int cy1 = p.getLocation().getBlockY() + 5;
 			int cy2 = p.getLocation().getBlockY() - 5;
-			int cx1 = p.getLocation().getChunk().getX()*16;
-			int cz1 = p.getLocation().getChunk().getZ()*16;
-			int cx2 = p.getLocation().getChunk().getX()*16+16;
-			int cz2 = p.getLocation().getChunk().getZ()*16+16;
+			int cx1 = p.getLocation().getChunk().getX() * 16;
+			int cz1 = p.getLocation().getChunk().getZ() * 16;
+			int cx2 = p.getLocation().getChunk().getX() * 16 + 16;
+			int cz2 = p.getLocation().getChunk().getZ() * 16 + 16;
 			CubeObject cube = new CubeObject(cx2, cx1, cy1, cy2, cz2, cz1);
 			cube.loadTarget(p);
 			cube.sendCube(CubeObject.ParticleColor.YELLOW);
@@ -127,14 +119,8 @@ public class BorderTaskEvent extends ClanEventBuilder implements Cancellable {
 					}
 				}
 			}
-			if (Bukkit.getPluginManager().isPluginEnabled("CenterSpawn")) {
-				if (ClansBorders.getInstance().spawnLocate.contains(p.getUniqueId())) {
-					cube.sendFlag(CubeObject.FlagType.SPAWN, getSpawn().getLocation());
-				}
-			} else {
-				if (ClansBorders.getInstance().spawnLocate.contains(p.getUniqueId())) {
-					cube.sendFlag(CubeObject.FlagType.SPAWN, p.getWorld().getSpawnLocation());
-				}
+			if (ClansBorders.getInstance().spawnLocate.contains(p.getUniqueId())) {
+				cube.sendFlag(CubeObject.FlagType.SPAWN, p.getWorld().getSpawnLocation());
 			}
 			if (ClansBorders.getInstance().playerLocate.contains(p.getUniqueId())) {
 				for (Entity e : p.getNearbyEntities(1000, 10, 1000)) {

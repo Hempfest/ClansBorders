@@ -1,5 +1,5 @@
 name: Borders
-version: 1.0.1
+version: 1.0.2
 main: com.youtube.hempfest.borders.ClansBorders
 api-version: 1.13
 depend: [ Clans ]

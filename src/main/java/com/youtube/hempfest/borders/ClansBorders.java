@@ -1,6 +1,5 @@
 package com.youtube.hempfest.borders;
 
-import com.github.sanctum.labyrinth.formatting.component.Text_R2;
 import com.github.sanctum.labyrinth.library.Message;
 import com.github.sanctum.labyrinth.library.TextLib;
 import com.youtube.hempfest.borders.task.BorderTask;
